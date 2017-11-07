@@ -24,6 +24,6 @@ const gameSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
   lastCard: { type: Number },
   draw: { type: Boolean, default: false },
-});
+}, { usePushEach: true })
 
 module.exports = mongoose.model('games', gameSchema)
