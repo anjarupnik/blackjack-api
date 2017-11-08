@@ -23,6 +23,7 @@ const gameSchema = new Schema({
   winnerId: { type: Schema.Types.ObjectId, ref: 'users' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  userId: { type: Schema.Types.ObjectId, ref: 'users' },
 }, { usePushEach: true })
 
 module.exports = mongoose.model('games', gameSchema)
