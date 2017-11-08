@@ -5,6 +5,13 @@ const { Game } = require('../models')
 const utils = require('../lib/utils')
 
 const authenticate = passport.authorize('jwt', { session: false })
+var cards = require('node-of-cards');
+var card = []
+cards.shuffle(function (err, data) {
+    cards.draw({number_of_cards: 52}, function (err, data) {
+      card.push(data.cards)
+});
+  });
 
 module.exports = io => {
   router
@@ -35,7 +42,7 @@ module.exports = io => {
           userId: req.account._id,
           hand: [{}]
         }],
-        deck: [{}]
+        deck: card
       }
 
       Game.create(newGame)
