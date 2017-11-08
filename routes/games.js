@@ -27,6 +27,7 @@ module.exports = io => {
         })
         .catch((error) => next(error))
     })
+
     .post('/games', authenticate, (req, res, next) => {
       const newGame = {
         userId: req.account._id,
