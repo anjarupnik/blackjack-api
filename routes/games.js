@@ -40,7 +40,7 @@ module.exports = io => {
         userId: req.account._id,
         players: [{
           userId: req.account._id,
-          hand: [{}]
+        
         }],
         deck: card
       }

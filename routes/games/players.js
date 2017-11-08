@@ -27,7 +27,12 @@ const getPlayers = (req, res, next) => {
         return {
           userId: player.userId,
           pairs: player.pairs,
-          name
+          name,
+          hand: [{}],
+          score: 0,
+          hasStood: false,
+          blackJack: false,
+          busted: false
         }
       })
       next()
