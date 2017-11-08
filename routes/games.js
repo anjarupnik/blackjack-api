@@ -27,15 +27,15 @@ module.exports = io => {
         })
         .catch((error) => next(error))
     })
+
     .post('/games', authenticate, (req, res, next) => {
       const newGame = {
         userId: req.account._id,
         players: [{
           userId: req.account._id,
-          pairs: []
+          hand: [{}]
         }],
-        cards: utils.shuffle('✿★♦✵♣♠♥✖'.repeat(2).split(''))
-          .map((symbol) => ({ visible: false, symbol }))
+        deck: [{}]
       }
 
       Game.create(newGame)
