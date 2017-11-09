@@ -6,7 +6,7 @@ const utils = require('../lib/utils')
 
 const authenticate = passport.authorize('jwt', { session: false })
 var cards = require('node-of-cards');
-var card = []
+var card = 0
 cards.shuffle(function (err, data) {
   cards.reshuffle(function (err, data) {
     cards.draw({number_of_cards: 52}, function (err, data) {

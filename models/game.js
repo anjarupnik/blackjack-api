@@ -2,11 +2,6 @@
 const mongoose = require('../config/database')
 const { Schema } = mongoose
 
-// const cardSchema = new Schema({
-//   name: { type: String, required: true },
-//   value: { type: Number },
-// });
-
 const playerSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   hand: [{}],
