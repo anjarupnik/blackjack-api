@@ -5,7 +5,6 @@ const { Schema } = mongoose
 const playerSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   hand: [{}],
-  score: { type: Number , default: 0},
   hasStood: { type: Boolean },
   blackJack: { type: Boolean, default: 0},
   busted: { type: Boolean, default: 21}
@@ -14,6 +13,7 @@ const playerSchema = new Schema({
 const gameSchema = new Schema({
   deck: [{}],
   players: [playerSchema],
+  turn: { type: Number , default: 0},
   started: { type: Boolean, default: false },
   winnerId: { type: Schema.Types.ObjectId, ref: 'users' },
   createdAt: { type: Date, default: Date.now },
