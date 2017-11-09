@@ -7,8 +7,8 @@ const playerSchema = new Schema({
   hand: [{}],
   score: { type: Number , default: 0},
   hasStood: { type: Boolean },
-  blackJack: { type: Number, default: 0},
-  busted: { type: Number, default: 21}
+  blackJack: { type: Boolean, default: 0},
+  busted: { type: Boolean, default: 21}
 });
 
 const gameSchema = new Schema({

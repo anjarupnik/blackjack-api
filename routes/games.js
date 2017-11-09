@@ -11,7 +11,6 @@ cards.shuffle(function (err, data) {
   cards.reshuffle(function (err, data) {
     cards.draw({number_of_cards: 52}, function (err, data) {
       return card = data.cards
-
     });
   });
 });
@@ -60,7 +59,10 @@ module.exports = io => {
     })
     .put('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
-      const updatedGame = req.body
+      const game = req.body
+      const updatedGame = {
+        started: true
+      }
 
       Game.findByIdAndUpdate(id, { $set: updatedGame }, { new: true })
         .then((game) => {
