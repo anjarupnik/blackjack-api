@@ -60,9 +60,6 @@ module.exports = io => {
     .put('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
       const game = req.body
-      const updatedGame = {
-        started: true
-      }
 
       Game.findByIdAndUpdate(id, { $set: updatedGame }, { new: true })
         .then((game) => {
@@ -76,7 +73,8 @@ module.exports = io => {
     })
     .patch('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
-      const patchForGame = req.body
+      playa = req.game.players.map(player => player.hand.push("something"))
+      const patchForGame = {started: true}
 
       Game.findById(id)
         .then((game) => {
