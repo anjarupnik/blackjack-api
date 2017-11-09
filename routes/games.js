@@ -91,12 +91,30 @@ module.exports = io => {
           var newPlayers = req.body.players
           newPlayers[0].hand = hand1
           newPlayers[1].hand = hand2
+          sum1 = hand1.map(p => {
+          if (p.value === "QUEEN") {return "10"}
+          if (p.value === "KING")  {return "10"}
+          if (p.value === "JACK")  {return "10"}
+          if (p.value === "ACE")   {return "11"}
+           return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
+            if (sum1 === 21) {newPlayers[0].blackJack = true }
+            if (sum1 > 21) {newPlayers[0].busted = true }
+          sum2 = hand2.map(p => {
+            if (p.value === "QUEEN") {return "10"}
+            if (p.value === "KING")  {return "10"}
+            if (p.value === "JACK")  {return "10"}
+            if (p.value === "ACE")   {return "11"}
+             return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
+          if (sum2 === 21) {newPlayers[1].blackJack = true }
+          if (sum2 > 21) {newPlayers[1].busted = true }
 
         patchForGame = {
           started: true,
           deck: newDeck,
           players: newPlayers
         }}
+
+
 
       Game.findById(id)
         .then((game) => {
