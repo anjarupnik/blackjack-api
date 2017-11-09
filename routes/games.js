@@ -57,12 +57,10 @@ module.exports = io => {
         })
         .catch((error) => next(error))
     })
+
     .put('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
-      const game = req.body
-      const updatedGame = {
-        started: true
-      }
+      const updatedGame = req.body
 
       Game.findByIdAndUpdate(id, { $set: updatedGame }, { new: true })
         .then((game) => {
@@ -75,8 +73,30 @@ module.exports = io => {
         .catch((error) => next(error))
     })
     .patch('/games/:id', authenticate, (req, res, next) => {
+      function pick(deck, hand) {
+        var num1 = Math.floor(Math.random() * (deck.length + 1))
+         hand.push(deck[num1])
+         newDeck = deck.filter(d => d !== game.deck[num1])}
       const id = req.params.id
-      const patchForGame = req.body
+      const game = req.body
+      var patchForGame = {}
+      var hand1 = []
+      var hand2 = []
+      var newDeck = []
+      if (game.deck.length === 52) {
+          pick(game.deck, hand1)
+          pick(newDeck, hand1)
+          pick(newDeck, hand2)
+          pick(newDeck, hand2)
+          var newPlayers = req.body.players
+          newPlayers[0].hand = hand1
+          newPlayers[1].hand = hand2
+
+        patchForGame = {
+          started: true,
+          deck: newDeck,
+          players: newPlayers
+        }}
 
       Game.findById(id)
         .then((game) => {
@@ -96,6 +116,7 @@ module.exports = io => {
         })
         .catch((error) => next(error))
     })
+
     .delete('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
       Game.findByIdAndRemove(id)
