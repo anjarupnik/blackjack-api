@@ -62,13 +62,19 @@ module.exports = io => {
       const id = req.params.id
       var updatedGame = req.body
 
-      if (req.body.players[0].userId.toString() === req.account._id.toString()) {
-         updatedGame.players[0].hasStood = true
+      if (req.body.players[0].userId.toString() === req.account._id.toString()
+          && req.body.turn % 2 !== 0) {
+          updatedGame.players[0].hasStood = true
+          updatedGame.turn = updatedGame.turn + 1
       }
 
-      if (req.body.players[1].userId.toString() === req.account._id.toString()) {
-         updatedGame.players[1].hasStood = true
+      if (req.body.players[1].userId.toString() === req.account._id.toString() &&
+          req.body.turn % 2 === 0) {
+          updatedGame.players[1].hasStood = true
+          updatedGame.turn = updatedGame.turn + 1
       }
+
+
 
       Game.findByIdAndUpdate(id, { $set: updatedGame }, { new: true })
         .then((game) => {
