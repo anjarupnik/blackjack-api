@@ -15,7 +15,7 @@ const gameSchema = new Schema({
   players: [playerSchema],
   turn: { type: Number , default: 0},
   started: { type: Boolean, default: false },
-  winnerId: { type: Schema.Types.ObjectId, ref: 'users' },
+  winnerId: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
