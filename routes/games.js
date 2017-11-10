@@ -80,15 +80,15 @@ module.exports = io => {
          if (p.value === "JACK")  {return "10"}
          if (p.value === "ACE")   {return "11"}
           return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
-        sum2 = updatedGame.players[0].hand.map(p => {
+        sum2 = updatedGame.players[1].hand.map(p => {
          if (p.value === "QUEEN") {return "10"}
          if (p.value === "KING")  {return "10"}
          if (p.value === "JACK")  {return "10"}
          if (p.value === "ACE")   {return "11"}
           return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
-
-         if (sum1 > sum2 ) { updatedGame.winnerId = req.body.players[0].userId}
-         if (sum1 < sum2 ) { updatedGame.winnerId = req.body.players[1].userId}
+debugger
+         if (sum1 > sum2 ) { updatedGame.winnerId = req.body.players[0].userId.toString()}
+         if (sum1 < sum2 ) { updatedGame.winnerId = req.body.players[1].userId.toString()}
          if (sum1 === sum2 ) { updatedGame.winnerId = "equal"}
       }
 
