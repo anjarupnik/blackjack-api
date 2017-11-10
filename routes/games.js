@@ -44,7 +44,8 @@ module.exports = io => {
           userId: req.account._id,
 
         }],
-        deck: card
+        deck: card,
+        winnerId: ""
       }
 
       Game.create(newGame)
@@ -62,14 +63,12 @@ module.exports = io => {
       const id = req.params.id
       var updatedGame = req.body
 
-      if (req.body.players[0].userId.toString() === req.account._id.toString()
-          && req.body.turn % 2 !== 0) {
+      if (req.body.players[0].userId.toString() === req.account._id.toString()) {
           updatedGame.players[0].hasStood = true
           updatedGame.turn = updatedGame.turn + 1
       }
 
-      if (req.body.players[1].userId.toString() === req.account._id.toString() &&
-          req.body.turn % 2 === 0) {
+      if (req.body.players[1].userId.toString() === req.account._id.toString()) {
           updatedGame.players[1].hasStood = true
           updatedGame.turn = updatedGame.turn + 1
       }
@@ -87,6 +86,10 @@ module.exports = io => {
          if (p.value === "JACK")  {return "10"}
          if (p.value === "ACE")   {return "11"}
           return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
+
+         if (sum1 > sum2 ) { updatedGame.winnerId = req.body.players[0].userId}
+         if (sum1 < sum2 ) { updatedGame.winnerId = req.body.players[1].userId}
+         if (sum1 === sum2 ) { updatedGame.winnerId = "equal"}
       }
 
 
