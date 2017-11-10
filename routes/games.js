@@ -60,7 +60,21 @@ module.exports = io => {
 
     .put('/games/:id', authenticate, (req, res, next) => {
       const id = req.params.id
-      const updatedGame = req.body
+      var updatedGame = req.body
+
+      if (req.body.players[0].userId.toString() === req.account._id.toString()
+          && req.body.turn % 2 !== 0) {
+          updatedGame.players[0].hasStood = true
+          updatedGame.turn = updatedGame.turn + 1
+      }
+
+      if (req.body.players[1].userId.toString() === req.account._id.toString() &&
+          req.body.turn % 2 === 0) {
+          updatedGame.players[1].hasStood = true
+          updatedGame.turn = updatedGame.turn + 1
+      }
+
+
 
       Game.findByIdAndUpdate(id, { $set: updatedGame }, { new: true })
         .then((game) => {
@@ -114,10 +128,13 @@ module.exports = io => {
         patchForGame = {
           started: true,
           deck: newDeck,
-          players: newPlayers
+          players: newPlayers,
+          turn: 1
         }}
 
-        if (game.deck.length < 52 && game.players[0].userId.toString() === req.account._id.toString()) {
+        if (game.deck.length < 52 &&
+             game.players[0].userId.toString() === req.account._id.toString()
+              && game.turn % 2 !== 0) {
           var newPlayers = req.body.players
           pick(game.deck, hand1)
           newPlayers[0].hand.push(...hand1)
@@ -132,11 +149,14 @@ module.exports = io => {
 
             patchForGame = {
             players: newPlayers,
-            deck: newDeck
+            deck: newDeck,
+            turn: game.turn + 1
           }
         }
 
-        if (game.deck.length < 52 && game.players[1].userId.toString() === req.account._id.toString()) {
+        if (game.deck.length < 52 &&
+             game.players[1].userId.toString() === req.account._id.toString()
+              && game.turn % 2 === 0) {
           var newPlayers = req.body.players
           pick(game.deck, hand2)
           newPlayers[1].hand.push(...hand2)
@@ -151,7 +171,8 @@ module.exports = io => {
 
             patchForGame = {
             players: newPlayers,
-            deck: newDeck
+            deck: newDeck,
+            turn: game.turn + 1
           }
         }
 
