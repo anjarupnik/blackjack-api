@@ -86,7 +86,6 @@ module.exports = io => {
          if (p.value === "JACK")  {return "10"}
          if (p.value === "ACE")   {return "11"}
           return p.value}).map(p => Number(p)).reduce((a, b) => a + b, 0)
-debugger
          if (sum1 > sum2 ) { updatedGame.winnerId = req.body.players[0].userId.toString()}
          if (sum1 < sum2 ) { updatedGame.winnerId = req.body.players[1].userId.toString()}
          if (sum1 === sum2 ) { updatedGame.winnerId = "equal"}
